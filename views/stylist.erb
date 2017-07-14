@@ -1,2 +1,21 @@
 <h6>Stylist Records</h6>
 <%= @stylist.name %>
+
+<div class="">
+  <h6>Register new clients</h6>
+  <form action="/stylists/clients" method="post">
+    <input type="hidden" name="stylist_id" id="stylist_id" value="<%= @stylist.id %>">
+    <input type="text" name="name" id="name" placeholder="Client's name">
+    <button type="submit">New Client</button>
+  </form>
+</div>
+
+<% if @clients.any? %>
+  <% @clients.each do |client| %>
+    <ul>
+      <li><a href="/clients/<%= client.id %>"><%= client.name %></a></li>
+    </ul>
+  <% end %>
+<% else %>
+  <p><%= @stylist.name %> has no clients assigned yet</p>
+<% end %>
