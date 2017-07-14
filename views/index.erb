@@ -1,1 +1,19 @@
 <h5>H|S Hair</h5>
+
+<div class="">
+  <h6>Register new stylists</h6>
+  <form action="/stylists" method="post">
+    <input type="text" name="name" id="name" placeholder="Stylists Name">
+    <button type="submit">Add Stylist</button>
+  </form>
+</div>
+
+<div class="">
+  <% if @stylists.any? %>
+    <% @stylists.each do |stylist| %>
+      <li><a href="/stylists/<%= stylist.id %>"><%= stylist.name %></a></li>
+    <% end %>
+  <% else %>
+    <p>There are no stylists yet</p>
+  <% end %>
+</div>

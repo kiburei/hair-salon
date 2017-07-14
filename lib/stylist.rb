@@ -1,9 +1,9 @@
 class Stylist
-  attr_accessor(:name, :id)
+  attr_reader(:name, :id)
 
   def initialize(attributes)
     @name = attributes.fetch(:name)
-    @id = attributes.fetch(:id)
+    @id = attributes.fetch(:id).to_i()
   end
 
 # return everything from class table in db
@@ -11,24 +11,26 @@ class Stylist
     results = DB.exec("SELECT * FROM stylists;")
     stylists = []
     results.each do |stylist|
-      stylists.push(Stylist.new(name: stylist.fetch('name', id: stylist.fetch('id'))))
+      name = stylist.fetch('name')
+      id = stylist.fetch('id').to_i
+      stylists.push(Stylist.new(name: name, id: id))
     end
     stylists
   end
 
 # save data to db
   def save
-    DB.exec("INSERT INTO stylists (name) VALUES ('#{self.name}')")
+    result = DB.exec("INSERT INTO stylists (name) VALUES ('#{@name}') RETURNING id;")
+    @id = result.first.fetch('id').to_i
   end
 
 # Get single ecord from db
   def self.find(id)
-    result = DB.exec("SELECT * FROM stylists WHERE id = #{id};")
-    stylist = nil
-    result.each do |s|
-      stylist = Stylist.new(name: s.fetch('name', id: s.fetch('id')))
+    found_stylist = nil
+    Stylist.all.each do |stylist|
+      stylist.id.to_i==id ? found_stylist=stylist : "do nothing"
     end
-    stylist
+    found_stylist
   end
 
 # update records in db
