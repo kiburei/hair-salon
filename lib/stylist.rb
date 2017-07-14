@@ -33,6 +33,18 @@ class Stylist
     found_stylist
   end
 
+  def clients
+    results = DB.exec("SELECT * FROM clients WHERE stylist_id = #{self.id};")
+    clients = []
+    results.each do |client|
+      id = client.fetch('id')
+      name = client.fetch('name')
+      stylist_id = client.fetch('stylist_id')
+      clients.push(Client.new(name: name, id: id, stylist_id: stylist_id))
+    end
+    clients
+  end
+
 # update records in db
   def update(attributes)
     @name = attributes.fetch('name')

@@ -10,8 +10,8 @@
   </form>
 </div>
 
-<% if @clients.any? %>
-  <% @clients.each do |client| %>
+<% if @stylist.clients.any? %>
+  <% @stylist.clients.each do |client| %>
     <ul>
       <li><a href="/clients/<%= client.id %>"><%= client.name %></a></li>
     </ul>

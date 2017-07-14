@@ -37,3 +37,8 @@ post('/stylists/clients') do
   @stylist = Stylist.find(stylist_id.to_i)
   erb(:stylist)
 end
+
+get('/clients/:id') do
+  @client = Client.find(params.fetch('id').to_i)
+  erb(:client)
+end
