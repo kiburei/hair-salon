@@ -8,3 +8,8 @@ require "sinatra"
 
 # add postgres db to app
 DB = PG.connect(dbname: 'hair_salon')
+
+# root url
+get('/') do
+  erb(:index)
+end
